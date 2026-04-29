@@ -24,10 +24,10 @@ for every new employee in Saudi HRMS implementations.
 
 ```bash
 # 1. Get the app
-bench get-app https://github.com/Neoadmin23/sa_hr_onboarding_app.git
+bench get-app https://github.com/Neoadmin23/irsaa_hrms.git
 
 # 2. Install on your site
-bench --site your-site.com install-app sa_hr_onboarding
+bench --site your-site.com install-app irsaa_hrms
 
 # 3. Run migrations
 bench --site your-site.com migrate
