@@ -161,15 +161,25 @@ def assign_leave_policy(doc, template):
         return {"status": "skipped", "message": f"Leave Policy '{template.leave_policy}' already assigned"}
 
     try:
-        lpa = frappe.get_doc({
-            "doctype": "Leave Policy Assignment",
-            "employee": doc.name,
-            "leave_policy": template.leave_policy,
-            "effective_from": doc.date_of_joining or today(),
-            "assignment_based_on": "Date of Joining",
-            "leave_period": template.leave_period or None,
-            "carry_forward": 0
-        })
+        from frappe.utils import add_days, get_last_day, getdate
+	import datetime
+
+	joining_date = getdate(doc.date_of_joining or today())
+
+	# Effective To = last day of current year
+	effective_to = datetime.date(joining_date.year, 12, 31)
+
+	lpa = frappe.get_doc({
+    		"doctype": "Leave Policy Assignment",
+		"employee": doc.name,
+		"leave_policy": template.leave_policy,
+		"effective_from": joining_date,
+		"effective_to": effective_to,
+   		"assignment_based_on": "Date of Joining",
+    		"leave_period": template.leave_period or None,
+   		"carry_forward": 0
+	})
+
         lpa.insert(ignore_permissions=True)
         lpa.submit()
 
