@@ -3,7 +3,7 @@ SA HR Onboarding - hooks.py
 Saudi HR Auto-Onboarding System
 """
 
-app_name = "sa_hr_onboarding"
+app_name = "irsaa_hrms"
 app_title = "SA HR Onboarding"
 app_publisher = "Your Company"
 app_description = "Saudi HR Auto-Onboarding: Auto-assigns Leave Policy, Shift, Holiday List & Salary Structure"
@@ -18,12 +18,8 @@ app_license = "MIT"
 
 doc_events = {
     "Employee": {
-        # Auto-assign all on NEW employee creation
-        "after_insert": "sa_hr_onboarding.api.onboarding.auto_assign_all",
-
-        # Also trigger on update ONLY if manually flagged
-        # (prevents re-running on every save)
-        "on_update": "sa_hr_onboarding.api.onboarding.auto_assign_all",
+        "after_insert": "irsaa_hrms.api.onboarding.auto_assign_all",
+        "on_update":    "irsaa_hrms.api.onboarding.auto_assign_all",
     }
 }
 
@@ -33,15 +29,11 @@ doc_events = {
 
 scheduler_events = {
     "daily": [
-        # Daily: check for employees missing assignments and alert HR
-        "sa_hr_onboarding.api.scheduler.alert_incomplete_onboarding",
-
-        # Daily: check contract expiry and Iqama expiry
-        "sa_hr_onboarding.api.scheduler.check_document_expiry",
+        "irsaa_hrms.api.scheduler.alert_incomplete_onboarding",
+        "irsaa_hrms.api.scheduler.check_document_expiry",
     ],
     "weekly": [
-        # Weekly: send comprehensive onboarding status report to HR Manager
-        "sa_hr_onboarding.api.scheduler.weekly_onboarding_report",
+        "irsaa_hrms.api.scheduler.weekly_onboarding_report",
     ]
 }
 

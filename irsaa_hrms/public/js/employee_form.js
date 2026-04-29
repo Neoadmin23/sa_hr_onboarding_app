@@ -15,14 +15,14 @@ frappe.ui.form.on('Employee', {
     // ─────────────────────────────────────
 
     refresh: function (frm) {
-        sa_hr_onboarding.setup_form(frm);
-        sa_hr_onboarding.show_onboarding_banner(frm);
-        sa_hr_onboarding.add_action_buttons(frm);
+        irsaa_hrms.setup_form(frm);
+        irsaa_hrms.show_onboarding_banner(frm);
+        irsaa_hrms.add_action_buttons(frm);
     },
 
     onload: function (frm) {
         if (frm.is_new()) {
-            sa_hr_onboarding.simplify_new_form(frm);
+            irsaa_hrms.simplify_new_form(frm);
         }
     },
 
@@ -31,19 +31,19 @@ frappe.ui.form.on('Employee', {
     // ─────────────────────────────────────
 
     employment_type: function (frm) {
-        sa_hr_onboarding.preview_template(frm);
+        irsaa_hrms.preview_template(frm);
     },
 
     department: function (frm) {
-        sa_hr_onboarding.preview_template(frm);
+        irsaa_hrms.preview_template(frm);
     },
 
     grade: function (frm) {
-        sa_hr_onboarding.preview_template(frm);
+        irsaa_hrms.preview_template(frm);
     },
 
     nationality: function (frm) {
-        sa_hr_onboarding.preview_template(frm);
+        irsaa_hrms.preview_template(frm);
     }
 });
 
@@ -51,7 +51,7 @@ frappe.ui.form.on('Employee', {
 // SA HR ONBOARDING NAMESPACE
 // ─────────────────────────────────────────────
 
-window.sa_hr_onboarding = {
+window.irsaa_hrms = {
 
     setup_form: function (frm) {
         // Set SAR as default currency
@@ -99,13 +99,13 @@ window.sa_hr_onboarding = {
         if (frappe.user.has_role('HR Manager')) {
             frm.add_custom_button(
                 __('🔄 Re-Run Auto-Onboarding'),
-                () => sa_hr_onboarding.manually_trigger_onboarding(frm),
+                () => irsaa_hrms.manually_trigger_onboarding(frm),
                 __('SA HR Actions')
             );
 
             frm.add_custom_button(
                 __('📋 View Onboarding Checklist'),
-                () => sa_hr_onboarding.show_onboarding_checklist(frm),
+                () => irsaa_hrms.show_onboarding_checklist(frm),
                 __('SA HR Actions')
             );
         }
@@ -119,7 +119,7 @@ window.sa_hr_onboarding = {
         if (!frm.doc.employment_type || !frm.doc.department) return;
 
         frappe.call({
-            method: 'sa_hr_onboarding.api.onboarding.get_onboarding_template',
+            method: 'irsaa_hrms.api.onboarding.get_onboarding_template',
             args: {
                 employment_type: frm.doc.employment_type,
                 department: frm.doc.department,
@@ -129,7 +129,7 @@ window.sa_hr_onboarding = {
             callback: function (r) {
                 if (r.message) {
                     const t = r.message;
-                    sa_hr_onboarding.show_template_preview(frm, t);
+                    irsaa_hrms.show_template_preview(frm, t);
 
                     // Auto-set holiday list immediately for UX
                     if (t.holiday_list && !frm.doc.holiday_list) {
@@ -203,7 +203,7 @@ window.sa_hr_onboarding = {
                 frappe.show_alert({ message: '⏳ Running auto-onboarding...', indicator: 'blue' });
 
                 frappe.call({
-                    method: 'sa_hr_onboarding.api.onboarding.manually_trigger_onboarding',
+                    method: 'irsaa_hrms.api.onboarding.manually_trigger_onboarding',
                     args: { employee: frm.doc.name },
                     callback: function (r) {
                         if (r.message) {

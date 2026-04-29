@@ -11,7 +11,7 @@ def alert_incomplete_onboarding():
     Daily task: Find employees missing required assignments.
     Sends email alert to HR Manager if any found.
     """
-    from sa_hr_onboarding.api.onboarding import get_onboarding_status_dashboard
+    from irsaa_hrms.api.onboarding import get_onboarding_status_dashboard
 
     try:
         incomplete = get_onboarding_status_dashboard()
@@ -208,7 +208,7 @@ def weekly_onboarding_report():
     Weekly: Full onboarding status report to HR Manager.
     Runs every Monday.
     """
-    from sa_hr_onboarding.api.onboarding import get_onboarding_status_dashboard
+    from irsaa_hrms.api.onboarding import get_onboarding_status_dashboard
 
     try:
         all_incomplete = get_onboarding_status_dashboard()
