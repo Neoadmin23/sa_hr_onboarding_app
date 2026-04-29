@@ -4,7 +4,7 @@ Saudi HR Auto-Onboarding System
 """
 
 app_name = "irsaa_hrms"
-app_title = "SA HR Onboarding"
+app_title = "IRSAA HRMS"
 app_publisher = "Your Company"
 app_description = "Saudi HR Auto-Onboarding: Auto-assigns Leave Policy, Shift, Holiday List & Salary Structure"
 app_icon = "octicon octicon-person"
